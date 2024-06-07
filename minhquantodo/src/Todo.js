@@ -4,14 +4,14 @@ import './App.css';
 import memo from 'react';
 import axios from 'axios';
 
-function Todos(props){  
+function Todos(props){
     return(
        props.task.map((item)=>{
         return(
-            <li className='firstcome'> 
+            <li className='firstcome' id={item.id}> 
                 <label>  
-                    <input type="checkbox" className='inputchecked'/>
-                    <p className="taskp">{item.item}</p>
+                    <input type="checkbox" className='inputchecked' id={item.id}/>
+                    <p className="taskp">{item.item || item}</p>
                     <span className="material-symbols-outlined" >edit</span>
                     <select name="statustask"  className="roles" >
                         <option className="opt" value="TO DO">TO DO</option>

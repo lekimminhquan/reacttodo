@@ -14,12 +14,24 @@ function App() {
       })
     })
   }
-  const postapi = async (todo)=>{
+  const postapi = async ()=>{
     await axios.post('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1',{
       item:todo,
       status:'TO DO',
     })
+  setTask((e)=>[...e,todo])
+    return(
+      <Todos task ={task}></Todos>
+    )
   }
+  const delapi =  ()=>{
+    const checkeddel = document.querySelectorAll('.inputchecked:checked')
+    checkeddel.forEach(async (e)=>{
+      await axios.delete('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/'+ e.id, )
+    } 
+  )
+}
+   
   useEffect(()=>{
     setTask([])
     getapitask()
@@ -30,13 +42,13 @@ function App() {
         <div className="bodys">
             <p>NEED TO DO</p>
             <input type="text" placeholder="Add a new task" id="add" onChange={(e)=>setTodo(e.target.value)}/>
-            <button className='addbutton' onClick={()=>postapi(todo)}>+</button>
+            <button className='addbutton' onClick={postapi}>+</button>
             <div className="status" >
                 <span id="ALL" >ALL</span>
                 <span id="TO DO" >To Do</span>
                 <span id="IN PROGRESS" >In Progressing</span>
                 <span id="DONE" >Done</span>
-                <button className="clearbutton">Clear</button>
+                <button className="clearbutton" onClick={delapi}>Clear</button>
             </div>
             <div className="items">
                 <ul className="ul">
