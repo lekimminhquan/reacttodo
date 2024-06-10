@@ -83,21 +83,16 @@ const App = () => {
     }
   };
   const edit = (id) => {
-    const x = document.querySelectorAll('.taskp')
-    x.forEach((tasks) => {
-      if (tasks.id == id) {
         task.map((item) => {
-          if (item.id == tasks.id) {
+          if (item.id == id) {
             item.key = true
           }
           setTask([...task])
         })
       }
-    })
-  }
 
   const editlisten = async (e) => {
-    if (e.keyCode === 13) {
+    if (e.keyCode == 13) {
       if (e.target.value != "") {
         axios.put('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/' + e.target.id, {
           item: e.target.value,
@@ -237,7 +232,7 @@ const App = () => {
                       className="inputchecked"
                       id={item.id}
                     />
-                    {item.key ? <input className="add2" onKeyDown={editlisten} id={item.id}></input> : <p className="taskp" id={item.id}>{item.item}</p>}
+                    {item.key ? <input className="add2" onKeyDown={editlisten} id={item.id} defaultValue={item.item}></input> : <p className="taskp" id={item.id}>{item.item}</p>}
                     <span className="material-symbols-outlined" onClick={() => edit(item.id)} >edit</span>
                     <select name="statustask" className="roles" id={item.id} onChange={setrole}>
                       <option className="opt" value="TO DO" id={item.id} selected={showseleterole(item.status, 'TO DO')}>
@@ -251,6 +246,7 @@ const App = () => {
                       </option>
                     </select>
                   </label>
+                  <p className="line"></p>
                 </li>
               );
             })}

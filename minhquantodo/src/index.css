@@ -2,13 +2,13 @@
 @import url(https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap);
 @import url(https://fonts.gstatic.com);
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
-body{
+body {
   background-color: rgb(191, 191, 255);
 }
 
-.form{
+.form {
   background-color: white;
-  border: 2px solid  white;
+  border: 2px solid white;
   width: 600px;
   margin: 100px auto;
   border-radius: 8px;
@@ -18,14 +18,14 @@ body{
 }
 .bodys p {
   font-size: 50px;
-  font-weight:300;
+  font-weight: 300;
   font-family: "Poetsen One", sans-serif;
   font-weight: 400;
   font-style: normal;
   padding-top: 20px;
 }
 
-.bodys input{
+.bodys input {
   text-align: left;
   height: 40px;
   width: 350px;
@@ -33,14 +33,13 @@ body{
   font-family: "Poetsen One", sans-serif;
   margin-top: 20px;
 }
-.bodys{
+.bodys {
   text-align: center;
 }
 
-
-.addbutton{
+.addbutton {
   position: relative;
-  margin-top:20px;
+  margin-top: 20px;
   margin-right: 30px;
   background-color: rgb(188, 188, 255);
   font-family: "Poetsen One", sans-serif;
@@ -53,11 +52,11 @@ body{
   width: 30px;
 }
 
-.addbutton:active{
+.addbutton:active {
   transform: translateY(3px);
   box-shadow: none;
 }
-.status{
+.status {
   position: relative;
   font-size: 20px;
   font-family: "Poetsen One", sans-serif;
@@ -66,21 +65,27 @@ body{
   color: rgb(188, 188, 255);
   top: 30px;
 }
-.status span{
+.status span {
   padding: 15px;
   color: #000;
 }
-.active{
+.active {
   color: rgb(188, 188, 255);
 }
-.status span:hover{
+.status span:hover {
   color: rgb(188, 188, 255);
 }
-.status button{
+.status button {
   margin-left: 15px;
 }
-.clearbutton{
-  margin-top:20px;
+.line {
+  border-bottom: 1px solid black;
+  width: 50%;
+  position: relative;
+  margin: 0 auto;
+}
+.clearbutton {
+  margin-top: 20px;
   margin-right: 30px;
   background-color: rgb(188, 188, 255);
   font-family: "Poetsen One", sans-serif;
@@ -91,11 +96,11 @@ body{
   box-shadow: 0 3px 0 black;
 }
 
-.clearbutton:active{
+.clearbutton:active {
   box-shadow: none;
   transform: translateY(3px);
 }
-.items{
+.items {
   margin-top: 50px;
 }
 .items ul {
@@ -103,11 +108,11 @@ body{
   text-align: left;
   margin-bottom: 15px;
 }
-.firstcome label input.inputchecked{
+.firstcome label input.inputchecked {
   position: relative;
   height: 20px;
   width: 30px;
-  margin-left: 10px ;
+  margin-left: 10px;
 }
 .firstcome label {
   position: relative;
@@ -123,22 +128,18 @@ body{
   margin-left: 15px;
 }
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24,;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   position: relative;
   margin-top: 15px;
   margin-left: 10px;
   margin-right: 15px;
 }
-.material-symbols-outlined:hover{
+.material-symbols-outlined:hover {
   background-color: rgb(188, 188, 255);
   border-radius: 30%;
 }
-   
-.firstcome label select{
+
+.firstcome label select {
   height: fit-content;
   font-family: "Poetsen One", sans-serif;
   font-weight: 400;
@@ -147,42 +148,108 @@ body{
   border-radius: 5px;
   position: relative;
   text-align: center;
-  margin-top:18px;
+  margin-top: 18px;
   background-color: rgb(188, 188, 255);
-  
 }
 
-.checked{
+.checked {
   color: red;
 }
 
-.firstcome label input{
+.firstcome label input {
   position: relative;
   text-align: left;
   height: 30px;
-  width: 393px;;  
+  width: 393px;
   border-radius: 3px;
   font-family: "Poetsen One", sans-serif;
 }
 
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-margin: 0;
-padding: 0;
-border: 0;
-font-size: 100%;
-font: inherit;
-vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
