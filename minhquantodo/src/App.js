@@ -1,6 +1,6 @@
 import "./App.css";
 import "./Todo";
-import { createElement, useEffect, useState } from "react";
+import { createElement, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 
@@ -8,6 +8,7 @@ import axios from "axios";
 const App = () => {
   const [task, setTask] = useState([]);
   const [roles, setRole] = useState(Number)
+  const prerole = useRef(0)
 
   const del = async () =>{
     task.map((e)=>{
@@ -41,7 +42,7 @@ const App = () => {
       .get("https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1")
       .then((res) => {
         res.data.map((e) => {
-          if (e.status == 'TO DO') {
+          if (e.status == "TO DO") {
             setTask((t) => [...t, e]);
           }
         });
@@ -123,10 +124,25 @@ const App = () => {
 
 
   const clearshowrole = () => {
-    const clear = document.querySelectorAll('.role')
-    clear.forEach((clears) => {
-      clears.style.color = '#000'
-    })
+    console.log(prerole.current)
+    switch(prerole.current){
+      case 0:{
+        const clear = document.getElementById("ALL")
+        clear.style.color="#000"
+      }
+      case 1:{
+        const clear = document.getElementById("TO DO")
+        clear.style.color="#000"
+      }
+      case 2:{
+        const clear = document.getElementById("IN PROGRESS")
+        clear.style.color="#000"
+      }
+      case 3:{
+        const clear = document.getElementById("DONE")
+        clear.style.color="#000"
+      }
+    }
   }
 
   const chooserole = () => {
@@ -196,24 +212,28 @@ const App = () => {
         setTask([])
         getapitask()
         chooserole()
+        prerole.current = roles
         break
       }
       case 1: {
         setTask([]);
         getapitasktodo();
         chooserole()
+        prerole.current = roles
         break
       }
       case 2: {
         setTask([]);
         getapitaskinprogress()
         chooserole()
+        prerole.current = roles
         break
       }
       case 3: {
         setTask([]);
         getapitaskdone()
         chooserole()
+        prerole.current = roles
         break
       }
     }
