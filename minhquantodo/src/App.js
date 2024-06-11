@@ -3,27 +3,30 @@ import "./Todo";
 import { createElement, useEffect, useState } from "react";
 import axios from "axios";
 
-function del() {
-  const checkeddel = document.querySelectorAll(".inputchecked:checked");
-  checkeddel.forEach((item) => {
-    axios.delete(
-      "https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/" + item.id)
-      .then((res) => {
-        removeelement(item.id);
-      })
 
-  });
-}
-function removeelement(id) {
-  const x = document.getElementById(id);
-  console.log(id);
-  x.remove();
-}
 
 const App = () => {
   const [task, setTask] = useState([]);
   const [roles, setRole] = useState(Number)
 
+  const del = async () =>{
+    task.map((e)=>{
+      if(e.check == true){
+        axios.delete('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/'+ e.id)
+        .then(res=>{
+          removeelement(e.id)
+        })
+        .catch(error=>{
+          alert('bạn đã submit quá nhanh vui lòng chờ trong giây lát')
+        })
+      }
+        
+    })
+  }
+  const removeelement= (id)=> {
+    const x = document.getElementById(id);
+    x.remove();
+  }
   const getapitask = async () => {
     await axios
       .get("https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1")
@@ -162,7 +165,20 @@ const App = () => {
       return false
     }
   }
-
+  const checkdel = (e)=>{
+    task.map((t)=>{
+      if(t.id == e.target.id){
+          if(t.check == false){
+            t.check = true
+            setTask([...task])
+          }
+          else{
+            t.check = false
+            setTask([...task])
+          }
+      }
+    })
+  }
   const setrole = async (e) => {
     await axios.put('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/' + e.target.id, {
       status: e.target.value
@@ -231,6 +247,7 @@ const App = () => {
                       type="checkbox"
                       className="inputchecked"
                       id={item.id}
+                      onClick={checkdel}
                     />
                     {item.key ? <input className="add2" onKeyDown={editlisten} id={item.id} defaultValue={item.item}></input> : <p className="taskp" id={item.id}>{item.item}</p>}
                     <span className="material-symbols-outlined" onClick={() => edit(item.id)} >edit</span>
