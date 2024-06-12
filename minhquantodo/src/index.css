@@ -65,9 +65,11 @@ body {
   color: rgb(188, 188, 255);
   top: 30px;
 }
-.status span {
-  padding: 15px;
-  color: #000;
+.role {
+  margin-right: 35px;
+}
+.unrol{
+  margin-right: 35px;
 }
 .active {
   color: rgb(188, 188, 255);
@@ -76,7 +78,9 @@ body {
   color: rgb(188, 188, 255);
 }
 .status button {
-  margin-left: 15px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 .line {
   border-bottom: 1px solid black;
@@ -120,6 +124,10 @@ body {
   font-size: 25px;
   width: 600px;
 }
+.unrol{
+  color: #000;
+}
+
 .firstcome label p {
   font-size: 18px;
   margin-top: -3px;

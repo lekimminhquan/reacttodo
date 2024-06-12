@@ -3,31 +3,37 @@ import "./Todo";
 import { createElement, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
-
-
 const App = () => {
   const [task, setTask] = useState([]);
-  const [roles, setRole] = useState(Number)
-  const prerole = useRef(0)
+  const [roles, setRole] = useState(0);
+  const prerole = useRef(0);
 
-  const del = async () =>{
-    task.map((e)=>{
-      if(e.check == true){
-        axios.delete('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/'+ e.id)
-        .then(res=>{
-          removeelement(e.id)
-        })
-        .catch(error=>{
-          alert('bạn đã submit quá nhanh vui lòng chờ trong giây lát')
-        })
+  const del = () => {
+    task.map(async (e) => {
+      if (e.check == true) {
+        await axios
+          .delete(
+            "https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/" + e.id
+          )
+          .then((res) => {
+            removeelement(e.id);
+          })
+          .catch((error) => {
+            return 0;
+          });
       }
-        
-    })
-  }
-  const removeelement= (id)=> {
-    const x = document.getElementById(id);
-    x.remove();
-  }
+      return 0;
+    });
+  };
+  const removeelement = (id) => {
+    for (let i = 0; i < task.length; i++) {
+      if (task[i].id == id) {
+        task.splice(i, 1);
+        setTask([...task]);
+        del();
+      }
+    }
+  };
   const getapitask = async () => {
     await axios
       .get("https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1")
@@ -55,7 +61,7 @@ const App = () => {
         res.data.map((e) => {
           if (e.status == "IN PROGRESS") {
             setTask((t) => [...t, e]);
-            console.log(e.status)
+            console.log(e.status);
           }
         });
       });
@@ -74,167 +80,126 @@ const App = () => {
   const postapi = async (e) => {
     if (e.keyCode === 13) {
       if (e.target.value != "") {
-        await axios.post('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1', ({
-          item: e.target.value,
-          status: 'TO DO',
-        }))
-          .catch((error) => { alert('bạn đã submit quá nhanh') })
+        await axios
+          .post("https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1", {
+            item: e.target.value,
+            status: "TO DO",
+          })
+          .catch((error) => {
+            alert("bạn đã submit quá nhanh");
+          });
 
-        setTask([...task, { item: e.target.value, status: "TO DO", id: task.length + 1 }]);
-        document.getElementById('add').value = ''
-
+        setTask([
+          ...task,
+          {
+            item: e.target.value,
+            status: "TO DO",
+            id: task.length != 0 ? Number(task[task.length - 1].id) + 1 : 1,
+          },
+        ]);
+        document.getElementById("add").value = "";
       }
     }
   };
   const edit = (id) => {
-        task.map((item) => {
-          if (item.id == id) {
-            item.key = true
-          }
-          setTask([...task])
-        })
+    task.map((item) => {
+      if (item.id == id) {
+        item.key = true;
       }
+      setTask([...task]);
+    });
+  };
 
   const editlisten = async (e) => {
     if (e.keyCode == 13) {
       if (e.target.value != "") {
-        axios.put('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/' + e.target.id, {
-          item: e.target.value,
-        })
+        axios.put(
+          "https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/" +
+          e.target.id,
+          {
+            item: e.target.value,
+          }
+        );
         task.map((item) => {
           if (item.id == e.target.id) {
-            item.key = false
-            item.item = e.target.value
+            item.key = false;
+            item.item = e.target.value;
           }
-
-        })
-        setTask([...task])
-      }
-      else {
+        });
+        setTask([...task]);
+      } else {
         task.map((item) => {
           if (item.id == e.target.id) {
-            item.key = false
+            item.key = false;
           }
-
-        })
-        setTask([...task])
+        });
+        setTask([...task]);
       }
     }
-  }
+  };
 
 
-  const clearshowrole = () => {
-    console.log(prerole.current)
-    switch(prerole.current){
-      case 0:{
-        const clear = document.getElementById("ALL")
-        clear.style.color="#000"
-      }
-      case 1:{
-        const clear = document.getElementById("TO DO")
-        clear.style.color="#000"
-      }
-      case 2:{
-        const clear = document.getElementById("IN PROGRESS")
-        clear.style.color="#000"
-      }
-      case 3:{
-        const clear = document.getElementById("DONE")
-        clear.style.color="#000"
-      }
-    }
-  }
 
-  const chooserole = () => {
-    switch (roles) {
-      case 0: {
-        clearshowrole()
-        const all = document.getElementById("ALL")
-        all.style.color = 'rgb(188, 188, 255)'
-        break
-      }
-      case 1: {
-        clearshowrole()
-        const all = document.getElementById("TO DO")
-        all.style.color = 'rgb(188, 188, 255)'
-        break
-      }
-      case 2: {
-        clearshowrole()
-        const all = document.getElementById("IN PROGRESS")
-        all.style.color = 'rgb(188, 188, 255)'
-        break
-      }
-      case 3: {
-        clearshowrole()
-        const all = document.getElementById("DONE")
-        all.style.color = 'rgb(188, 188, 255)'
-        break
-      }
-    }
-  }
   const showseleterole = (statusname, value) => {
     if (statusname == value) {
-      return true
+      return true;
+    } else {
+      return false;
     }
-    else {
-      return false
-    }
-  }
-  const checkdel = (e)=>{
-    task.map((t)=>{
-      if(t.id == e.target.id){
-          if(t.check == false){
-            t.check = true
-            setTask([...task])
-          }
-          else{
-            t.check = false
-            setTask([...task])
-          }
+  };
+  const checkdel = (e) => {
+    task.map((t) => {
+      if (t.id == e.target.id) {
+        if (t.check == false) {
+          t.check = true;
+          setTask([...task]);
+        } else {
+          t.check = false;
+          setTask([...task]);
+        }
       }
-    })
-  }
+    });
+  };
   const setrole = async (e) => {
-    await axios.put('https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/' + e.target.id, {
-      status: e.target.value
-    })
+    await axios.put(
+      "https://6641d7633d66a67b34352311.mockapi.io/api/todolist/1/" +
+      e.target.id,
+      {
+        status: e.target.value,
+      }
+    );
     task.map((item) => {
       if (item.id == e.target.id) {
-        item.status = e.target.value
+        item.status = e.target.value;
       }
-    })
-    setTask([...task])
-  }
+    });
+    setTask([...task]);
+  };
   useEffect(() => {
     switch (roles) {
       case 0: {
-        setTask([])
-        getapitask()
-        chooserole()
-        prerole.current = roles
-        break
+        setTask([]);
+        getapitask();
+        prerole.current = roles;
+        break;
       }
       case 1: {
         setTask([]);
         getapitasktodo();
-        chooserole()
-        prerole.current = roles
-        break
+        prerole.current = roles;
+        break;
       }
       case 2: {
         setTask([]);
-        getapitaskinprogress()
-        chooserole()
-        prerole.current = roles
-        break
+        getapitaskinprogress();
+        prerole.current = roles;
+        break;
       }
       case 3: {
         setTask([]);
-        getapitaskdone()
-        chooserole()
-        prerole.current = roles
-        break
+        getapitaskdone();
+        prerole.current = roles;
+        break;
       }
     }
   }, [roles]);
@@ -249,10 +214,18 @@ const App = () => {
           onKeyDown={postapi}
         />
         <div className="status">
-          <span id="ALL" className="role" onClick={() => setRole(0)}>ALL</span>
-          <span id="TO DO" className="role" onClick={() => setRole(1)}>To Do</span>
-          <span id="IN PROGRESS" className="role" onClick={() => setRole(2)}>In Progressing</span>
-          <span id="DONE" className="role" onClick={() => setRole(3)}>Done</span>
+          <span id="ALL" className={roles==0?'role':'unrol'} onClick={() => setRole(0)}>
+            ALL
+          </span>
+          <span id="TO DO" className={roles==1?'role':'unrol'} onClick={() => setRole(1)}>
+            To Do
+          </span>
+          <span id="IN PROGRESS" className={roles==2?"role":"unrol"} onClick={() => setRole(2)}>
+            In Progressing
+          </span>
+          <span id="DONE" className={roles==3?"role":"unrol"} onClick={() => setRole(3)}>
+            Done
+          </span>
           <button className="clearbutton" onClick={del}>
             Clear
           </button>
@@ -267,18 +240,56 @@ const App = () => {
                       type="checkbox"
                       className="inputchecked"
                       id={item.id}
-                      onClick={checkdel}
+                      onChange={checkdel}
+                      checked={item.check}
                     />
-                    {item.key ? <input className="add2" onKeyDown={editlisten} id={item.id} defaultValue={item.item}></input> : <p className="taskp" id={item.id}>{item.item}</p>}
-                    <span className="material-symbols-outlined" onClick={() => edit(item.id)} >edit</span>
-                    <select name="statustask" className="roles" id={item.id} onChange={setrole}>
-                      <option className="opt" value="TO DO" id={item.id} selected={showseleterole(item.status, 'TO DO')}>
+                    {item.key ? (
+                      <input
+                        className="add2"
+                        onKeyDown={editlisten}
+                        id={item.id}
+                        defaultValue={item.item}
+                      ></input>
+                    ) : (
+                      <p className="taskp" id={item.id}>
+                        {item.item}
+                      </p>
+                    )}
+                    <span
+                      className="material-symbols-outlined"
+                      onClick={() => edit(item.id)}
+                    >
+                      edit
+                    </span>
+                    <select
+                      name="statustask"
+                      className="roles"
+                      id={item.id}
+                      onChange={setrole}
+                    >
+                      <option
+                        className="opt"
+                        value="TO DO"
+                        id={item.id}
+                        selected={showseleterole(item.status, "TO DO")}
+
+                      >
                         TO DO
                       </option>
-                      <option className="opt" value="IN PROGRESS" id={item.id} selected={showseleterole(item.status, 'IN PROGRESS')}>
+                      <option
+                        className="opt"
+                        value="IN PROGRESS"
+                        id={item.id}
+                        selected={showseleterole(item.status, "IN PROGRESS")}
+                      >
                         IN PROGRESS
                       </option>
-                      <option className="opt" value="DONE" id={item.id} selected={showseleterole(item.status, 'DONE')}>
+                      <option
+                        className="opt"
+                        value="DONE"
+                        id={item.id}
+                        selected={showseleterole(item.status, "DONE")}
+                      >
                         DONE
                       </option>
                     </select>
