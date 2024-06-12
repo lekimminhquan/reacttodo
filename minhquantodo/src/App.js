@@ -89,15 +89,13 @@ const App = () => {
             alert("bạn đã submit quá nhanh");
           });
 
-        setTask([
-          ...task,
-          {
+        setTask([...task,{
             item: e.target.value,
             status: "TO DO",
             id: task.length != 0 ? Number(task[task.length - 1].id) + 1 : 1,
-          },
-        ]);
-        document.getElementById("add").value = "";
+          },]);
+          e.target.value=""
+
       }
     }
   };
@@ -212,6 +210,7 @@ const App = () => {
           placeholder="Add a new task and press 'Enter'"
           id="add"
           onKeyDown={postapi}
+          
         />
         <div className="status">
           <span id="ALL" className={roles==0?'role':'unrol'} onClick={() => setRole(0)}>
